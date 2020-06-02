@@ -1,28 +1,67 @@
-document.getElementById("textField");
+      let randomNumber = Math.floor(Math.random() * 100) + 1;
+      const guesses = document.querySelector('.guesses');
+      const lastResult = document.querySelector('.lastResult');
+      const lowOrHi = document.querySelector('.lowOrHi');
+      const guessSubmit = document.querySelector('.guessSubmit');
+      const guessField = document.querySelector('.guessField');
+      let guessCount = 1;
+      let resetButton;
 
+      function checkGuess() {
+        let userGuess = Number(guessField.value);
+        // if (guessCount === 1) {
+        //   guesses.textContent = ' ';
+        // }
 
+        guesses.textContent += userGuess + ' ';
 
-//1から100までの数字でランダムに決定選ぶ
-let randomNumber = Math.floor(Math.random() * 100) + 1;
-//決定した値をiとする
+        if (userGuess === randomNumber) {
+          lastResult.textContent = 'よくわかったな！天才だよきみは！';
+          lastResult.style.backgroundColor = 'green';
+          lowOrHi.textContent = '';
+          setGameOver();
+        } else if (guessCount === 10) {
+          lastResult.textContent = 'はい、ダメ〜！！おしまい！';
+          lowOrHi.textContent = '';
+          setGameOver();
+        } else {
+          lastResult.textContent = '違うね。その数字じゃないね。';
+          lastResult.style.backgroundColor = 'red';
+          if(userGuess < randomNumber) {
+            lowOrHi.textContent = 'その数字は小さすぎるよ。' ;
+          } else if(userGuess > randomNumber) {
+            lowOrHi.textContent = 'その数字は大きすぎるよ。';
+          }
+        }
 
-//配列を準備する
+        guessCount++;
+        guessField.value = '';
+        guessField.focus();
+      }
 
-//ボタンを押すと、入力された値を配列に入れる
+      guessSubmit.addEventListener('click', checkGuess);
 
-//前回の予想は配列から取り出す
+      function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+        resetButton = document.createElement('button');
+        resetButton.textContent = 'Start new game';
+        document.body.appendChild(resetButton);
+        resetButton.addEventListener('click', resetGame);
+      }
 
-//前回の予想を表示する
+      function resetGame() {
+        guessCount = 1;
+        const resetParas = document.querySelectorAll('.resultParas p');
+        for(let i = 0 ; i < resetParas.length ; i++) {
+          resetParas[i].textContent = '';
+        }
 
-//入力された数字が答えの値より大きかった場合、「今のは小さすぎます。もっと大きい数字です。」と表示する
-
-//入力された数字が答えの値より小さかった場合、「今のは大きすぎます。もっと小さい数字です。」と表示する
-
-//もし値が合っていたら、「正解です！」と表示させる。間違っていたら、「間違いです！」と表示させる
-
-//ボタンが10回押されたら、ボタンと文字入力をできなくする
-
-//ボタンが10回押されたら、「ニューゲーム」ボタンを表示する。
-
-//「ニューゲームボタン」押すと、全てがリセットされる
-
+        resetButton.parentNode.removeChild(resetButton);
+        guessField.disabled = false;
+        guessSubmit.disabled = false;
+        guessField.value = '';
+        guessField.focus();
+        lastResult.style.backgroundColor = 'white';
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+      }

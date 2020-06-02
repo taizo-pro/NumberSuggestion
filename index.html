@@ -7,21 +7,26 @@
 </head>
 <body>
   <h1>数字当てゲーム</h1>
-  1 から 100 までの数字を当ててみて！10 回以内に当てられるでしょうか。<br>
+  <p>1 から 100 までの数字を当ててみて！10 回以内に当てられるでしょうか。
+  </p>
   選んだ数字が大きいか小さいかを表示します。<br><br>
-  数字を入力してください:
-  <form action="#">
-    <input type="text" id = textField>
-    <button id = "btnAction">予想を入力</button><br><br>
-  </form>
+  <div class = "form">
+    <label for = "guessField">  数字を入力してください:</label>
+      <input type="text" id = "guessField" class = "guessField" placeholder="数字をいれてね">
+    <input type="submit" value="答えを提出する" id = "guessSubmit" class = "guessSubmit"><br><br>
+
   前回の予想：
-  <div class = "suggestion">
-    <p class = "lastSug">fafa</p>
-    <p class = "result">fafa</p>
-    <p class = "lowOrHigh">fafa</p>
   </div>
+
+  <div class="resultParas">
+    <p class="guesses"></p>
+    <p class="lastResult"></p>
+    <p class="lowOrHi"></p>
+  </div>
+
+  <script src="./index.js">
+  
+  </script>
 </body>
 
-<script src="index.js">
-</script>
 </html>
